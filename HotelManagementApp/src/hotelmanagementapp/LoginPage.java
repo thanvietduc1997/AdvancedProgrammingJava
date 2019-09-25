@@ -10,6 +10,8 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author dinhk
@@ -107,26 +109,57 @@ public class LoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginButtonActionPerformed
-        // TODO add your handling code here:
-        Class.forName("org.apache.derby.jdbc.ClientDriver");
+        try {
+            // TODO add your handling code here:
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String host ="jdbc:derby://localhost:1527/HotelManagement";
         String username="tuyen";
         String pass="1";
-        Connection con =DriverManager.getConnection(host,username,pass);
-        java.sql.Statement stmt=con.createStatement();
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(host,username,pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        java.sql.Statement stmt = null;
+        try {
+            stmt = con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String query="select * from TUYEN.ACCOUNT where USERNAME='"+jUsernameField.getText()+"' AND PASSWORD='"+jPasswordField.getText()+"' ";
-        ResultSet result =stmt.executeQuery(query);
+        ResultSet result = null;
+        try {
+            result = stmt.executeQuery(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        if(result.next())
-        {
+        try {
+            if(result.next())
+            {
                 MainForm mainForm =new MainForm();
                 mainForm.setVisible(true);
                 this.setVisible(false);
+            }
+            else
+                jResponse.setText("Wrong Username or Password");
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else 
-            jResponse.setText("Wrong Username or Password");
-        stmt.close();
-        con.close();
+        try {
+            stmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLoginButtonActionPerformed
 
     /**
