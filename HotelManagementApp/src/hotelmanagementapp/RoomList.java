@@ -47,16 +47,28 @@ public class RoomList {
         try {
             rs = stmt.executeQuery("SELECT * FROM ap_db.room;");
             String[] columnNames = {"Mã phòng", "Loại phòng", "Tình trạng phòng", "Giá"};
-            DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+            DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0){
+                public boolean isCellEditable(int row, int col) {
+                    return false;
+                }
+            };
 
             while (rs.next()) {
                 String idroom = rs.getString("idroom");
                 String type = rs.getString("type");
                 String status = rs.getString("status");
                 String price = rs.getString("price");
+                String status_str = new String();
+                
+                if (status.equals("0")) {
+                    status_str = "Chưa đặt";
+                }
+                else {
+                    status_str = "Đã đặt";
+                }
 
                 // create a single array of one row's worth of data
-                String[] data = { idroom, type, status, price } ;
+                String[] data = { idroom, type, status_str, price } ;
 
                 // and add this row of data into the table model
                 tableModel.addRow(data);

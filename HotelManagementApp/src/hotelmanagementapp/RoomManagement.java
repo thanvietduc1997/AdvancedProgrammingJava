@@ -57,6 +57,8 @@ public class RoomManagement extends javax.swing.JFrame {
 
         jLabel1.setText("Mã phòng");
 
+        jTextRoomNo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
         jLabel2.setText("Loại phòng");
 
         jLabel3.setText("Tình trạng phòng");
@@ -73,6 +75,12 @@ public class RoomManagement extends javax.swing.JFrame {
                 "Mã phòng", "Loại phòng", "Tình trạng phòng", "Giá phòng"
             }
         ));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setHeaderValue("Mã phòng");
@@ -82,6 +90,7 @@ public class RoomManagement extends javax.swing.JFrame {
         }
 
         jButton1.setText("Thêm");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -89,6 +98,8 @@ public class RoomManagement extends javax.swing.JFrame {
         });
 
         jButton2.setText("Lưu");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -96,6 +107,7 @@ public class RoomManagement extends javax.swing.JFrame {
         });
 
         jButton3.setText("Xoá");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -111,23 +123,16 @@ public class RoomManagement extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(33, 33, 33)
-                                .addComponent(jTextRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(33, 33, 33)
-                                .addComponent(jTextRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(33, 33, 33)
-                                    .addComponent(jTextRoomPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextRoomPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jButton1)
@@ -234,8 +239,9 @@ public class RoomManagement extends javax.swing.JFrame {
         String addQuery = "INSERT INTO `ap_db`.`room` (`idroom`, `type`, `status`, `price`)"
                 + " VALUES ('" + jTextRoomNo.getText() + "', '"
                 + jTextRoomType.getText() + "', '"
-                + jComboBoxStatus.getItemAt(0) + "', '"
+                + jComboBoxStatus.getSelectedIndex() + "', '"
                 + jTextRoomPrice.getText() + "')";
+        
         ResultSet rs = null;
         try {
             if(stmt.executeUpdate(addQuery) > 0) {
@@ -258,6 +264,40 @@ public class RoomManagement extends javax.swing.JFrame {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        jButton2.enable();
+        int rowIndex = jTable1.getSelectedRow();
+        String idroom = (String) jTable1.getValueAt(rowIndex, 0);
+        
+        String host ="jdbc:mysql://localhost:3306/ap_db";
+        String username="root";
+        String pass="thanducsu";
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(host, username, pass);
+            Statement stmt = conn.createStatement();
+            String selQuery = "select * from ap_db.room where (`idroom` = '" + idroom + "')";
+            ResultSet rs = stmt.executeQuery(selQuery);
+            
+            String roomType = rs.getString("type");
+            int statusId = rs.getInt("status");
+            String roomPrice = rs.getString("price");
+            
+            jTextRoomNo.setText(idroom);
+            jTextRoomType.setText(roomType);
+            jComboBoxStatus.setSelectedIndex(statusId);
+            jTextRoomPrice.setText(roomPrice);
+            
+            stmt.close();
+            conn.close();
+        }
+        catch (Exception ex) {
+            
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

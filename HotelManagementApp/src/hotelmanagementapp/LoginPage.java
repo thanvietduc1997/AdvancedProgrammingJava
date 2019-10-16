@@ -35,10 +35,7 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jUsernameField = new javax.swing.JTextField();
         jLoginButton = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jSigninLabel = new javax.swing.JLabel();
         jPasswordField = new javax.swing.JPasswordField();
-        jResponse = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,11 +54,6 @@ public class LoginPage extends javax.swing.JFrame {
                 jLoginButtonActionPerformed(evt);
             }
         });
-
-        jLabel4.setText("Don't have account? ");
-
-        jSigninLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jSigninLabel.setText("Sign in");
 
         jPasswordField.setText("1");
 
@@ -85,17 +77,8 @@ public class LoginPage extends javax.swing.JFrame {
                             .addComponent(jPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(196, 196, 196)
-                        .addComponent(jLoginButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jSigninLabel)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 68, Short.MAX_VALUE)
-                .addComponent(jResponse, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                        .addComponent(jLoginButton)))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,13 +95,7 @@ public class LoginPage extends javax.swing.JFrame {
                     .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLoginButton)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jSigninLabel))
-                .addGap(18, 18, 18)
-                .addComponent(jResponse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -164,8 +141,7 @@ public class LoginPage extends javax.swing.JFrame {
                 mainForm.setVisible(true);
                 this.setVisible(false);
             }
-            else
-                jResponse.setText("Wrong Username or Password");
+            
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -223,11 +199,8 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jLoginButton;
     private javax.swing.JPasswordField jPasswordField;
-    private javax.swing.JTextField jResponse;
-    private javax.swing.JLabel jSigninLabel;
     private javax.swing.JTextField jUsernameField;
     // End of variables declaration//GEN-END:variables
 }
