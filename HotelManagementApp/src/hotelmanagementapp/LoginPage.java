@@ -5,11 +5,7 @@
  */
 package hotelmanagementapp;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -53,6 +49,8 @@ public class LoginPage extends javax.swing.JFrame {
 
         jLabel3.setText("Password");
 
+        jUsernameField.setText("admin");
+
         jLoginButton.setText("Log in");
         jLoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,6 +62,8 @@ public class LoginPage extends javax.swing.JFrame {
 
         jSigninLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jSigninLabel.setText("Sign in");
+
+        jPasswordField.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,13 +125,13 @@ public class LoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginButtonActionPerformed
-        String host ="jdbc:derby://localhost:1527/HotelManagement";
-        String username="tuyen";
-        String pass="1";
+        String host ="jdbc:mysql://localhost:3306/ap_db";
+        String username="root";
+        String pass="thanducsu";
         Connection con = null;
         try {
             // TODO add your handling code here:
-            Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(host,username,pass);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,7 +149,7 @@ public class LoginPage extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String query="select * from TUYEN.ACCOUNT where USERNAME='"+jUsernameField.getText()+"' AND PASSWORD='"+jPasswordField.getText()+"' ";
+        String query="select * from ap_db.user where USERNAME='"+jUsernameField.getText()+"' AND PASSWORD='"+jPasswordField.getText()+"' ";
         ResultSet result = null;
         try {
             result = stmt.executeQuery(query);
