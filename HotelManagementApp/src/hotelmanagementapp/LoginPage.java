@@ -7,6 +7,7 @@ package hotelmanagementapp;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -108,14 +109,22 @@ public class LoginPage extends javax.swing.JFrame {
     private DBConnect dbCon = new DBConnect();
     
     private void jLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginButtonActionPerformed
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         Connection conn = dbCon.getConnection();
+        String query="select * from ap_db.user where USERNAME=? AND PASSWORD=?";
         try {
-            stmt = conn.createStatement();
+            stmt = conn.prepareStatement(query);
+            String password = "";
+            stmt.setString(1, jUsernameField.getText());
+            char[] getPassword = jPasswordField.getPassword();
+            for (char c : getPassword) {
+                password += c;
+            }
+            stmt.setString(2, password);
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String query="select * from ap_db.user where USERNAME='"+jUsernameField.getText()+"' AND PASSWORD='"+jPasswordField.getText()+"' ";
+        
         ResultSet result = null;
         try {
             result = stmt.executeQuery(query);
