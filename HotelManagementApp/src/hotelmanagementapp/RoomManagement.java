@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -25,10 +26,57 @@ public class RoomManagement extends javax.swing.JFrame {
      */
     public RoomManagement() {
         initComponents();
-        room.getInfo(jTable1);
+        jButtonDelete.setEnabled(false);
+        jButtonSaveChange.setEnabled(false);
+        jButtonAdd.setEnabled(true);
+        conn = dbCon.getConnection();
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM ap_db.room;");
+            String[] columnNames = {"Mã phòng", "Loại phòng", "Tình trạng phòng", "Giá"};
+            DefaultTableModel tableModel;
+            tableModel = new DefaultTableModel(columnNames, 0){
+                @Override
+                public boolean isCellEditable(int row, int col) {
+                    return false;
+                }
+            };
+
+            while (rs.next()) {
+                String idroom = rs.getString("idroom");
+                String type = rs.getString("type");
+                String status = rs.getString("status");
+                String price = rs.getString("price");
+                String status_str;
+                
+                if (status.equals("0")) {
+                    status_str = "Chưa đặt";
+                }
+                else {
+                    status_str = "Đã đặt";
+                }
+
+                // create a single array of one row's worth of data
+                String[] data = { idroom, type, status_str, price } ;
+
+                // and add this row of data into the table model
+                tableModel.addRow(data);
+            }
+
+            jTable1.setModel(tableModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomList.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public static RoomList room = new RoomList();
+    private DBConnect dbCon = new DBConnect();
+    private Connection conn;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,9 +97,9 @@ public class RoomManagement extends javax.swing.JFrame {
         jComboBoxStatus = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonAdd = new javax.swing.JButton();
+        jButtonSaveChange = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,28 +137,28 @@ public class RoomManagement extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(3).setHeaderValue("Giá phòng");
         }
 
-        jButton1.setText("Thêm");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAdd.setText("Thêm");
+        jButtonAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAddActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Lưu");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setEnabled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSaveChange.setText("Lưu");
+        jButtonSaveChange.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonSaveChange.setEnabled(false);
+        jButtonSaveChange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonSaveChangeActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Xoá");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDelete.setText("Xoá");
+        jButtonDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonDeleteActionPerformed(evt);
             }
         });
 
@@ -135,11 +183,11 @@ public class RoomManagement extends javax.swing.JFrame {
                             .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton1)
+                        .addComponent(jButtonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonSaveChange)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(jButtonDelete)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -168,71 +216,55 @@ public class RoomManagement extends javax.swing.JFrame {
                             .addComponent(jTextRoomPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))))
+                            .addComponent(jButtonAdd)
+                            .addComponent(jButtonSaveChange)
+                            .addComponent(jButtonDelete))))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonSaveChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveChangeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonSaveChangeActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
         int rowIndex = jTable1.getSelectedRow();
         String idroom = (String) jTable1.getValueAt(rowIndex, 0);
         // For Debuging only
         System.out.println(idroom);
         
-        String host ="jdbc:mysql://localhost:3306/ap_db";
-        String username="root";
-        String pass="thanducsu";
-        
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(host, username, pass);
             Statement stmt = conn.createStatement();
             String delQuery = "DELETE FROM `ap_db`.`room` WHERE (`idroom` = '"
                     + idroom + "')";
             stmt.execute(delQuery);
-            room.getInfo(jTable1);
+            DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
+            tm.removeRow(rowIndex);
+            
             
             stmt.close();
-            conn.close();
         }
-        catch (Exception ex) {
-            System.out.println(ex);
+        catch (SQLException ex) {
+            Logger.getLogger(RoomManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
-        String host ="jdbc:mysql://localhost:3306/ap_db";
-        String username="root";
-        String pass="thanducsu";
-        Connection con = null;
+        String idroom = jTextRoomNo.getText();
+        String type = jTextRoomType.getText();
+        String status = jComboBoxStatus.getSelectedItem().toString();
+        String price = jTextRoomPrice.getText();
+        String[] data = { idroom, type, status, price };
         
-        try {
-            // TODO add your handling code here:
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection(host,username,pass);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
+        tm.addRow(data);
         Statement stmt = null;
         try {
-            stmt = con.createStatement();
+            stmt = conn.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -245,7 +277,7 @@ public class RoomManagement extends javax.swing.JFrame {
         ResultSet rs = null;
         try {
             if(stmt.executeUpdate(addQuery) > 0) {
-                room.getInfo(jTable1);
+//                room.getInfo(jTable1);
             }
             
         } catch (SQLException ex) {
@@ -258,45 +290,19 @@ public class RoomManagement extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        jButton2.enable();
+        jButtonSaveChange.setEnabled(true);
+        jButtonDelete.setEnabled(true);
+        jButtonAdd.setEnabled(false);
         int rowIndex = jTable1.getSelectedRow();
         String idroom = (String) jTable1.getValueAt(rowIndex, 0);
+        String roomType = (String) jTable1.getValueAt(rowIndex, 1);
+        String status = (String) jTable1.getValueAt(rowIndex, 2);
+        String roomPrice = (String) jTable1.getValueAt(rowIndex, 3);
         
-        String host ="jdbc:mysql://localhost:3306/ap_db";
-        String username="root";
-        String pass="thanducsu";
-        
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(host, username, pass);
-            Statement stmt = conn.createStatement();
-            String selQuery = "select * from ap_db.room where (`idroom` = '" + idroom + "')";
-            ResultSet rs = stmt.executeQuery(selQuery);
-            
-            String roomType = rs.getString("type");
-            int statusId = rs.getInt("status");
-            String roomPrice = rs.getString("price");
-            
-            jTextRoomNo.setText(idroom);
-            jTextRoomType.setText(roomType);
-            jComboBoxStatus.setSelectedIndex(statusId);
-            jTextRoomPrice.setText(roomPrice);
-            
-            stmt.close();
-            conn.close();
-        }
-        catch (Exception ex) {
-            
-        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**
@@ -335,9 +341,9 @@ public class RoomManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonSaveChange;
     private javax.swing.JComboBox<String> jComboBoxStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

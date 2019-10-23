@@ -27,13 +27,7 @@ public class RoomList {
             // TODO add your handling code here:
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(host,username,pass);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -58,7 +52,7 @@ public class RoomList {
                 String type = rs.getString("type");
                 String status = rs.getString("status");
                 String price = rs.getString("price");
-                String status_str = new String();
+                String status_str;
                 
                 if (status.equals("0")) {
                     status_str = "Chưa đặt";
