@@ -23,13 +23,14 @@ public class RoomManagement extends javax.swing.JFrame {
 
     /**
      * Creates new form RoomManagement
+     * @param conn
      */
-    public RoomManagement() {
+    public RoomManagement(Connection connGlobal) {
         initComponents();
         jButtonDelete.setEnabled(false);
         jButtonSaveChange.setEnabled(false);
         jButtonAdd.setEnabled(true);
-        conn = dbCon.getConnection();
+        conn = connGlobal;
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
@@ -75,7 +76,6 @@ public class RoomManagement extends javax.swing.JFrame {
         }
     }
     
-    private DBConnect dbCon = new DBConnect();
     private Connection conn;
 
     /**
@@ -290,6 +290,10 @@ public class RoomManagement extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jTextRoomNo.setText("");
+        jTextRoomType.setText("");
+        jTextRoomPrice.setText("");
+        jComboBoxStatus.setSelectedIndex(0);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -303,42 +307,16 @@ public class RoomManagement extends javax.swing.JFrame {
         String status = (String) jTable1.getValueAt(rowIndex, 2);
         String roomPrice = (String) jTable1.getValueAt(rowIndex, 3);
         
+        jTextRoomNo.setText(idroom);
+        jTextRoomType.setText(roomType);
+        jTextRoomPrice.setText(roomPrice);
+        if (status.equals("Chưa đặt")){
+            jComboBoxStatus.setSelectedIndex(0);
+        }
+        else jComboBoxStatus.setSelectedIndex(1);
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RoomManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RoomManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RoomManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RoomManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RoomManagement().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;

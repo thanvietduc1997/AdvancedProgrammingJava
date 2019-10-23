@@ -5,6 +5,7 @@
  */
 package hotelmanagementapp;
 
+import java.sql.Connection;
 import javax.swing.JFrame;
 
 /**
@@ -15,9 +16,11 @@ public class MainForm extends javax.swing.JFrame {
 
     /**
      * Creates new form abc
+     * @param conn
      */
-    public MainForm() {
+    public MainForm(Connection conn) {
         initComponents();
+        this.conn = conn;
     }
 
     /**
@@ -100,6 +103,8 @@ public class MainForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public Connection conn;
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFrame frame=new JFrame();
         frame.setBounds(0, 0, 300, 300);
@@ -121,7 +126,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        RoomManagement f = new RoomManagement();
+        RoomManagement f = new RoomManagement(this.conn);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton4ActionPerformed

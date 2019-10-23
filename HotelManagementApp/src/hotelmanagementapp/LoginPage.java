@@ -125,10 +125,9 @@ public class LoginPage extends javax.swing.JFrame {
         
         try {
             if(result.next()) {
-                MainForm mainForm = new MainForm();
+                MainForm mainForm = new MainForm(conn);
                 mainForm.setVisible(true);
                 this.setVisible(false);
-                conn.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
