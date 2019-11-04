@@ -18,6 +18,8 @@ public class RoomBook extends javax.swing.JFrame {
         initComponents();
         jComboBox1.addItem("Đơn");
         jComboBox1.addItem("Đôi");
+        jComboBox2.addItem("VIP");
+        jComboBox2.addItem("Thường");
     }
 
     /**
@@ -44,6 +46,7 @@ public class RoomBook extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Hệ thống đặt phòng");
 
         jLabel1.setText("Loại phòng");
 
@@ -77,7 +80,6 @@ public class RoomBook extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -109,7 +111,7 @@ public class RoomBook extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,8 +180,8 @@ public class RoomBook extends javax.swing.JFrame {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
-        String hang_phong[]={"VIP","Thường"};
-        jComboBox2=new javax.swing.JComboBox(hang_phong);
+//        String hang_phong[]={"VIP","Thường"};
+//        jComboBox2=new javax.swing.JComboBox(hang_phong);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**

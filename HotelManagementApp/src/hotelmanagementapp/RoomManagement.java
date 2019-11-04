@@ -39,7 +39,7 @@ public class RoomManagement extends javax.swing.JFrame {
         }
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM ap_db.room;");
+            rs = stmt.executeQuery("SELECT * FROM 8gQHxi21p3.room;");
             String[] columnNames = {"Mã phòng", "Loại phòng", "Tình trạng phòng", "Giá"};
             DefaultTableModel tableModel;
             tableModel = new DefaultTableModel(columnNames, 0){

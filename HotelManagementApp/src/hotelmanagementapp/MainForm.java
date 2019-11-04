@@ -106,10 +106,13 @@ public class MainForm extends javax.swing.JFrame {
     public Connection conn;
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame frame=new JFrame();
-        frame.setBounds(0, 0, 300, 300);
-        frame.setVisible(true);
+//        JFrame frame=new JFrame();
+//        frame.setBounds(0, 0, 300, 300);
+//        frame.setVisible(true);
         // TODO add your handling code here:
+        RoomBook rb=new RoomBook();
+        this.setVisible(false);
+        rb.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
