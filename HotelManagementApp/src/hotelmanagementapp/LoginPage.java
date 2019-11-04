@@ -109,7 +109,7 @@ public class LoginPage extends javax.swing.JFrame {
     private void jLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginButtonActionPerformed
         PreparedStatement stmt = null;
         Connection conn = dbCon.getConnection();
-        String query="select * from ap_db.user where USERNAME=? AND PASSWORD=?";
+        String query="select * from 8gQHxi21p3.user where USERNAME=? AND PASSWORD=?";
         try {
             stmt = conn.prepareStatement(query);
             stmt.setString(1, jUsernameField.getText());

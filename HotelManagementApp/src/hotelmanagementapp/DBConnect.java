@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  * @author admin
  */
 public class DBConnect {
-    private String host ="jdbc:mysql://aphotelmanagement.mysql.database.azure.com:3306/ap_db?useSSL=true&requireSSL=false&serverTimezone=UTC";
-    private String username="hoteladmin@aphotelmanagement";
-    private String pass="Abcd1234";
+    private String host ="jdbc:mysql://remotemysql.com:3306/8gQHxi21p3";
+    private String username="8gQHxi21p3";
+    private String pass="aqyoPY4Hp2";
     private Connection conn;
     public DBConnect() {
         conn = null;
