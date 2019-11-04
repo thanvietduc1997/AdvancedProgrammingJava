@@ -94,7 +94,7 @@ public class RoomManagement extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextRoomPrice = new javax.swing.JTextField();
-        jComboBoxStatus = new javax.swing.JComboBox<>();
+        jComboBoxStatus = new javax.swing.JComboBox<String>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButtonAdd = new javax.swing.JButton();
@@ -113,7 +113,7 @@ public class RoomManagement extends javax.swing.JFrame {
 
         jLabel4.setText("Giá");
 
-        jComboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chưa đặt", "Đã đặt" }));
+        jComboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chưa đặt", "Đã đặt" }));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,12 +130,6 @@ public class RoomManagement extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("Mã phòng");
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("Loại phòng");
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Tình trạng phòng");
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("Giá phòng");
-        }
 
         jButtonAdd.setText("Thêm");
         jButtonAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

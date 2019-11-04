@@ -5,6 +5,15 @@
  */
 package hotelmanagementapp;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author dinhk
@@ -13,11 +22,22 @@ public class Customer_Info extends javax.swing.JFrame {
 
     /**
      * Creates new form Customer_Info
+     * @param connG
+     * @param start
+     * @param end
+     * @param room
      */
-    public Customer_Info() {
+    public Customer_Info(Connection connG,Date start,Date end,String room) {
         initComponents();
+        this.conn=connG;
+        this.startD=start;
+        this.endD=end;
+        this.room=room;
     }
-
+    public Connection conn;
+    public Date startD;
+    public Date endD;
+    public String room;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,10 +63,6 @@ public class Customer_Info extends javax.swing.JFrame {
         label2.setText("Ngày sinh");
 
         label3.setText("Số CMND");
-
-        jTextField1.setText("jTextField1");
-
-        jTextField3.setText("jTextField3");
 
         label4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -113,42 +129,70 @@ public class Customer_Info extends javax.swing.JFrame {
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
         
+        String name=jTextField1.getText();
+        String cmnd=jTextField3.getText();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date dob =jDateChooser1.getDate();
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String addQuery = "INSERT INTO 8gQHxi21p3.book_room (`Customer`, `Room`, `StartDate`, `EndDate`,`CMND`,`Dob`)"
+                + " VALUES ('" + name + "', '"
+                + this.room + "', STR_TO_DATE('"
+                + sdf.format(this.startD) + "','%d-%m-%Y'), STR_TO_DATE('"
+                + sdf.format(this.endD) + "','%d-%m-%Y') ,'"
+                + cmnd + "', STR_TO_DATE( '"
+                + sdf.format(dob)+ "','%d-%m-%Y') )";
+
+        try
+        {
+            stmt.execute(addQuery);
+            JOptionPane.showMessageDialog(null,"Đặt phòng thành công");
+            this.setVisible(false);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(RoomList.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_button1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Customer_Info().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Customer_Info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Customer_Info().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;

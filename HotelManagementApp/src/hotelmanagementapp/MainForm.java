@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 public class MainForm extends javax.swing.JFrame {
 
     /**
-     * Creates new form abc
+     * Creates new form 
      * @param conn
      */
     public MainForm(Connection conn) {
@@ -110,7 +110,7 @@ public class MainForm extends javax.swing.JFrame {
 //        frame.setBounds(0, 0, 300, 300);
 //        frame.setVisible(true);
         // TODO add your handling code here:
-        RoomBook rb=new RoomBook();
+        RoomBook rb=new RoomBook(conn);
         this.setVisible(false);
         rb.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
