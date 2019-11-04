@@ -16,6 +16,8 @@ public class RoomBook extends javax.swing.JFrame {
      */
     public RoomBook() {
         initComponents();
+        jComboBox1.addItem("Đơn");
+        jComboBox1.addItem("Đôi");
     }
 
     /**
@@ -69,7 +71,6 @@ public class RoomBook extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -170,8 +171,9 @@ public class RoomBook extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        String loai_phong[]={"Đơn","Đôi"};
-        jComboBox1=new javax.swing.JComboBox(loai_phong);
+//        String loai_phong[]={"Đơn","Đôi"};
+//        jComboBox1.addItem(loai_phong);
+//        jComboBox1=new javax.swing.JComboBox(loai_phong);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
