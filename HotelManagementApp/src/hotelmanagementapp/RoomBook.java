@@ -196,6 +196,8 @@ public class RoomBook extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
             // TODO add your handling code here:
+        
+        
         if(jDateChooser1.getDate()==null||jDateChooser2.getDate()==null||jTextField1.getText()==null) 
             JOptionPane.showMessageDialog(null,"Bạn chưa nhập đủ phòng,ngày đến và ngày đi");
         else

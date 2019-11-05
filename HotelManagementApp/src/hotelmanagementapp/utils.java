@@ -32,9 +32,9 @@ public class utils {
     public static String mySQLDateFormat;
     static {
         System.out.println("Establish connect to db");
-        String url = "jdbc:mysql://127.0.0.1:3306/ap_db";
-        String user = "root";
-        String password = "thanducsu";
+        String url = "jdbc:mysql://remotemysql.com:3306/8gQHxi21p3";
+        String user = "8gQHxi21p3";
+        String password = "aqyoPY4Hp2";
         conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

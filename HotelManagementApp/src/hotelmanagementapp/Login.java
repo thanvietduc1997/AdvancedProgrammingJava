@@ -151,7 +151,7 @@ public class Login extends javax.swing.JFrame {
     private void jLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginButtonActionPerformed
         PreparedStatement stmt = null;
         String query;
-        query = "select * from ap_db.tbl_login where USERNAME=? AND PASSWORD=?";
+        query = "select * from 8gQHxi21p3.tbl_login where USERNAME=? AND PASSWORD=?";
         try {
             stmt = utils.getConnection().prepareStatement(query);
             stmt.setString(1, jUsernameField.getText());
