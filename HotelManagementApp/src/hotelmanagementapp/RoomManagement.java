@@ -23,23 +23,23 @@ public class RoomManagement extends javax.swing.JFrame {
 
     /**
      * Creates new form RoomManagement
-     * @param conn
+     * @param connGlobal
+     * @param db_name
      */
-    public RoomManagement(Connection connGlobal) {
+    public RoomManagement() {
         initComponents();
         jButtonDelete.setEnabled(false);
         jButtonSaveChange.setEnabled(false);
         jButtonAdd.setEnabled(true);
-        conn = connGlobal;
         Statement stmt = null;
         try {
-            stmt = conn.createStatement();
+            stmt = utils.getConnection().createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM 8gQHxi21p3.room;");
+            rs = stmt.executeQuery("SELECT * FROM ap_db.room;");
             String[] columnNames = {"Mã phòng", "Loại phòng", "Tình trạng phòng", "Giá"};
             DefaultTableModel tableModel;
             tableModel = new DefaultTableModel(columnNames, 0){
@@ -75,8 +75,6 @@ public class RoomManagement extends javax.swing.JFrame {
             Logger.getLogger(RoomList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private Connection conn;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,9 +228,8 @@ public class RoomManagement extends javax.swing.JFrame {
         String idroom = (String) jTable1.getValueAt(rowIndex, 0);
         // For Debuging only
         System.out.println(idroom);
-        
         try {
-            Statement stmt = conn.createStatement();
+            Statement stmt = utils.getConnection().createStatement();
             String delQuery = "DELETE FROM `ap_db`.`room` WHERE (`idroom` = '"
                     + idroom + "')";
             stmt.execute(delQuery);
@@ -259,9 +256,9 @@ public class RoomManagement extends javax.swing.JFrame {
         tm.addRow(data);
         Statement stmt = null;
         try {
-            stmt = conn.createStatement();
+            stmt = utils.getConnection().createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         String addQuery = "INSERT INTO `ap_db`.`room` (`idroom`, `type`, `status`, `price`)"
                 + " VALUES ('" + jTextRoomNo.getText() + "', '"
@@ -283,7 +280,7 @@ public class RoomManagement extends javax.swing.JFrame {
         try {
             stmt.close();
         } catch (SQLException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         jTextRoomNo.setText("");
         jTextRoomType.setText("");

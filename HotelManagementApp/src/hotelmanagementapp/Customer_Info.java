@@ -27,14 +27,12 @@ public class Customer_Info extends javax.swing.JFrame {
      * @param end
      * @param room
      */
-    public Customer_Info(Connection connG,Date start,Date end,String room) {
+    public Customer_Info(Date start,Date end,String room) {
         initComponents();
-        this.conn=connG;
         this.startD=start;
         this.endD=end;
         this.room=room;
     }
-    public Connection conn;
     public Date startD;
     public Date endD;
     public String room;
@@ -134,10 +132,11 @@ public class Customer_Info extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date dob =jDateChooser1.getDate();
         Statement stmt = null;
+        Connection conn = utils.getConnection();
         try {
             stmt = conn.createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         String addQuery = "INSERT INTO 8gQHxi21p3.book_room (`Customer`, `Room`, `StartDate`, `EndDate`,`CMND`,`Dob`)"
