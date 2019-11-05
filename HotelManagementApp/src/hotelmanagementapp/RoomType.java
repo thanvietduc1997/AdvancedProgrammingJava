@@ -78,7 +78,7 @@ public class RoomType extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        ResultSet rs = utils.executeQuery("select * from ap_db.room_type");
+        ResultSet rs = utils.executeQuery("select * from 8gQHxi21p3.room_type");
         String[] tb_columns = {"Loại phòng", "Tên loại"};
         String[] db_columns = {"type_id", "type_name"};
         utils.tableRender(jTableRoomType, tb_columns, db_columns, rs);

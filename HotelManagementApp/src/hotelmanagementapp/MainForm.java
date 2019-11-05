@@ -19,7 +19,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
-        jLabelUsername.setText(utils.getUsername());
+        jLabelUsername.setText(utils.getUser());
     }
 
     /**
@@ -31,39 +31,21 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonMakeReservation = new javax.swing.JButton();
         jButtonRoomManagement = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabelUsername = new javax.swing.JLabel();
         jButtonCheckAvaialable = new javax.swing.JButton();
         jButtonLogOut = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonAddCustomer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jButton1.setText("Yêu cần đặt phòng");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMakeReservation.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jButtonMakeReservation.setText("Yêu cầu đặt phòng");
+        jButtonMakeReservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jButton2.setText("Yêu cầu trả phòng");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jButton3.setText("Yêu cầu nhận phòng");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonMakeReservationActionPerformed(evt);
             }
         });
 
@@ -97,11 +79,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jButton4.setText("Thêm dữ liệu khách hàng");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAddCustomer.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jButtonAddCustomer.setText("Quản lý khách hàng");
+        jButtonAddCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonAddCustomerActionPerformed(evt);
             }
         });
 
@@ -110,30 +92,20 @@ public class MainForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButtonCheckAvaialable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabelUsername)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonLogOut))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonCheckAvaialable, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonRoomManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE))))
+                    .addComponent(jButtonAddCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRoomManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonMakeReservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButtonCheckAvaialable, jButtonRoomManagement});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -143,47 +115,25 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jLabelUsername)
                     .addComponent(jButtonLogOut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAddCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButtonRoomManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
+                .addComponent(jButtonMakeReservation)
+                .addGap(0, 0, 0)
                 .addComponent(jButtonCheckAvaialable, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButtonCheckAvaialable, jButtonRoomManagement});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAddCustomer, jButtonCheckAvaialable, jButtonMakeReservation, jButtonRoomManagement});
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        JFrame frame=new JFrame();
-//        frame.setBounds(0, 0, 300, 300);
-//        frame.setVisible(true);
-        // TODO add your handling code here:
-        RoomBook rb = new RoomBook();
-        this.setVisible(false);
-        rb.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JFrame frame=new JFrame();
-        frame.setBounds(0, 0, 300, 300);
-        frame.setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        JFrame frame=new JFrame();
-        frame.setBounds(0, 0, 300, 300);
-        frame.setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jButtonMakeReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMakeReservationActionPerformed
+        new MakeReservation().setVisible(true);
+    }//GEN-LAST:event_jButtonMakeReservationActionPerformed
 
     private void jButtonRoomManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRoomManagementActionPerformed
         // TODO add your handling code here:
@@ -193,7 +143,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRoomManagementActionPerformed
 
     private void jButtonCheckAvaialableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckAvaialableActionPerformed
-        CheckAvailableForm checkform = new CheckAvailableForm();
+        CheckAvailable checkform = new CheckAvailable();
         checkform.setVisible(true);
         checkform.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(false);
@@ -205,24 +155,23 @@ public class MainForm extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButtonLogOutActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCustomerActionPerformed
         // TODO add your handling code here:
-        Registration r =new Registration();
+        CustomerManagement r = new CustomerManagement();
+        r.setLocationRelativeTo(null);
         r.setVisible(true);
         r.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonAddCustomerActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonAddCustomer;
     private javax.swing.JButton jButtonCheckAvaialable;
     private javax.swing.JButton jButtonLogOut;
+    private javax.swing.JButton jButtonMakeReservation;
     private javax.swing.JButton jButtonRoomManagement;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelUsername;

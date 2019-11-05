@@ -27,40 +27,47 @@ import javax.swing.JTable;
  */
 public class utils {
     public static Connection conn;
-    public static String username;
     public static Dimension dim;
     public static String mySQLDateFormat;
-    static {
+    public static String hostname;
+    public static String db_name;
+    public static String username;
+    public static String password;
+    
+    public static String user; // for mainform username display only
+    
+    public static void initConnection() {
         System.out.println("Establish connect to db");
-        String url = "jdbc:mysql://remotemysql.com:3306/8gQHxi21p3";
-        String user = "8gQHxi21p3";
-        String password = "aqyoPY4Hp2";
+        String url = hostname + db_name;
         conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, user, password);
+            conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connect successfully!");
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         dim = Toolkit.getDefaultToolkit().getScreenSize();
     }
+    
+    public static void setUser(String name) { user = name; }
+    public static String getUser() { return user; }
+    
+    public static void  setHostname(String name) { hostname = name; }
+    public static String getHostname() { return hostname; }
+    
+    public static void setDBName(String name) { db_name = name; }
+    public static String getDBName () { return db_name; }
+    
+    public static void setUsername(String name) { username = name; }
+    public static String getUserName() { return username; }
+    
+    public static void setPassword(String pass) { password = pass; }
+    public static String getPassword() { return password; }
 
-    public static Connection getConnection() {
-        return conn;
-    }
+    public static Connection getConnection() { return conn; }
     
-    public static void setUsername(String name) {
-        username = name;
-    }
-    
-    public static String getUsername() {
-        return username;
-    }
-    
-    public static Dimension getScreenSize() {
-        return dim;
-    }
+    public static Dimension getScreenSize() { return dim; }
     
     public static ResultSet executeQuery(String query) {
         Statement stmt = null;
@@ -83,13 +90,24 @@ public class utils {
             String[] inputString) throws SQLException 
     {
         PreparedStatement st;
-
         st = conn.prepareStatement(preparedQuery);
         for (int i = 0; i < inputString.length; i++) {
             st.setString(i+1, inputString[i]);
         }
         
         return st.executeQuery();
+    }
+    
+    public static void updateQueryWithPreparedStatment(String preparedQuery, String[] inputString) {
+        try {
+            PreparedStatement st = conn.prepareStatement(preparedQuery);
+            for (int i = 0; i < inputString.length; i++) {
+                st.setString(i+1, inputString[i]);
+            }
+            st.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void tableRender(JTable table,
@@ -124,11 +142,6 @@ public class utils {
         return dateFormat.format(d);
     }
     
-    public static void setMySQLDateFormat(String format) {
-        mySQLDateFormat = format;
-    }
-    
-    public static String getMySQLDateFormat() {
-        return mySQLDateFormat;
-    }
+    public static void setMySQLDateFormat(String format) { mySQLDateFormat = format; }
+    public static String getMySQLDateFormat() { return mySQLDateFormat; }
 }

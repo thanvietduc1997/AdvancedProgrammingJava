@@ -85,9 +85,9 @@ public class Login extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addComponent(jLabelTitle)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +102,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLoginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -113,7 +113,7 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -151,7 +151,9 @@ public class Login extends javax.swing.JFrame {
     private void jLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginButtonActionPerformed
         PreparedStatement stmt = null;
         String query;
-        query = "select * from 8gQHxi21p3.tbl_login where USERNAME=? AND PASSWORD=?";
+        query = "select * from "
+                + utils.getDBName() 
+                + ".tbl_login where USERNAME=? AND PASSWORD=?";
         try {
             stmt = utils.getConnection().prepareStatement(query);
             stmt.setString(1, jUsernameField.getText());
@@ -175,7 +177,7 @@ public class Login extends javax.swing.JFrame {
                 String username = result.getString("username");
                 int customer_id = result.getInt("customer_id");
                 if (customer_id == 1) {
-                    utils.setUsername(username);
+                    utils.setUser(username);
                     new MainForm().setVisible(true);
                     this.dispose();
                 } else {
@@ -195,7 +197,11 @@ public class Login extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        utils.getConnection();
+        utils.setHostname("jdbc:mysql://remotemysql.com:3306/");
+        utils.setDBName("8gQHxi21p3");
+        utils.setUsername("8gQHxi21p3");
+        utils.setPassword("aqyoPY4Hp2");
+        utils.initConnection();
         utils.setMySQLDateFormat("YYYY-MM-dd");
     }//GEN-LAST:event_formWindowOpened
 

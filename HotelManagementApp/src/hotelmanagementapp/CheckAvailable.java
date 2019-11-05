@@ -20,13 +20,13 @@ import javax.swing.SwingUtilities;
  *
  * @author admin
  */
-public class CheckAvailableForm extends javax.swing.JFrame {
+public class CheckAvailable extends javax.swing.JFrame {
 
     /**
      * Creates new form CheckAvailableForm
      * @param mainForm
      */
-    public CheckAvailableForm() {
+    public CheckAvailable() {
         initComponents();
     }
 
@@ -227,33 +227,43 @@ public class CheckAvailableForm extends javax.swing.JFrame {
                     + "Mời bạn chọn lại ngày đến phù hợp.", "Lỗi", 0);
         }
         else {
-//            jPanelSearchTable.setVisible(true);
-//            this.pack();
             Date checkInDate = jDateChooserArrival.getDate();
             Date checkOutDate = jDateChooserDeparture.getDate();
             String format = utils.getMySQLDateFormat();
             String checkInDateString = utils.convertJavaUtilDateToString(checkInDate, format);
             String checkOutDateString = utils.convertJavaUtilDateToString(checkOutDate, format);
             String roomType = jComboBoxRoomType.getSelectedItem().toString();
-            String[] inputString = { checkInDateString, checkOutDateString, roomType };
+            String[] inputString = { 
+                checkInDateString,
+                checkInDateString,
+                checkOutDateString,
+                checkOutDateString,
+                checkInDateString,
+                checkOutDateString,
+                roomType
+            };
             
             try {
-                String prepareQuery = 
-                        "SELECT * " 
-                      + "FROM ap_db.room_details "
-                      + "WHERE room_no "
-                      + "IN ("
-                      +      "SELECT room_no "		
-		      +      "FROM ap_db.tbl_reserve "
-		      +      "WHERE ? >= departure_date OR ? <= arrival_date"
-                      +     ") AND room_type = ?;";
+                String prepareQuery = "SELECT * "
+                                    + "FROM "
+                                    + utils.getDBName()
+                                    + ".room_details "
+                                    + "WHERE room_no NOT IN "
+                                    + "("
+                                    +    "SELECT room_no "
+                                    +    "FROM "
+                                    +    utils.getDBName() + ".tbl_reserve "
+                                    +    "where (? < departure_date and ? >= arrival_date) "
+                                    +    "or (? > arrival_date and ? <= departure_date) "
+                                    +    "or (? <= arrival_date and ? >= departure_date)"
+                                    + ") and room_type = ?;";
                 ResultSet rs = utils.executeQueryWithPreparedStatement(prepareQuery, inputString);
                 
                 String[] tb_columns = { "Số phòng", "Loại phòng", "Số lượng giường ngủ", "Giá" };
                 String[] db_columns = { "room_no", "room_type", "no_bed", "price" };
                 utils.tableRender(jTableSearchResult, tb_columns, db_columns, rs);
             } catch (SQLException ex) {
-                Logger.getLogger(CheckAvailableForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CheckAvailable.class.getName()).log(Level.SEVERE, null, ex);
             }
             jPanelSearchTable.setVisible(true);
             this.pack();
@@ -261,13 +271,13 @@ public class CheckAvailableForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        ResultSet rs = utils.executeQuery("select type_id from ap_db.room_type");
+        ResultSet rs = utils.executeQuery("select type_id from 8gQHxi21p3.room_type");
         try {
             while(rs.next()){
                 jComboBoxRoomType.addItem(rs.getString("type_id"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CheckAvailableForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckAvailable.class.getName()).log(Level.SEVERE, null, ex);
         }
         jPanelSearchTable.setVisible(false);
         this.pack();
